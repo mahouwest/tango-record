@@ -1,0 +1,171 @@
+{
+    "update": "2018/7/24",
+    "word": {
+        "tag-example1": [
+            {
+                "write": "example1",
+                "pronounce": "123",
+                "imi": "example1"
+            },
+            {
+                "write": "example2",
+                "pronounce": "example2",
+                "imi": "456"
+            },
+            {
+                "write": "example3",
+                "pronounce": "123",
+                "imi": "example3"
+            },
+            {
+                "write": "example4",
+                "pronounce": "example4",
+                "imi": "456"
+            },
+            {
+                "write": "example5",
+                "pronounce": "123",
+                "imi": "example5"
+            },
+            {
+                "write": "example6",
+                "pronounce": "example6",
+                "imi": "456"
+            },
+            {
+                "write": "example7",
+                "pronounce": "123",
+                "imi": "example7"
+            },
+            {
+                "write": "example8",
+                "pronounce": "example8",
+                "imi": "456"
+            },
+            {
+                "write": "example9",
+                "pronounce": "123",
+                "imi": "example9"
+            },
+            {
+                "write": "example10",
+                "pronounce": "example10",
+                "imi": "456"
+            }
+        ],
+        "tag-example2": [
+            {
+                "write": "example1",
+                "pronounce": "123",
+                "imi": "example1"
+            },
+            {
+                "write": "example2",
+                "pronounce": "example2",
+                "imi": "456"
+            },
+            {
+                "write": "example3",
+                "pronounce": "123",
+                "imi": "example3"
+            },
+            {
+                "write": "example4",
+                "pronounce": "example4",
+                "imi": "456"
+            },
+            {
+                "write": "example5",
+                "pronounce": "123",
+                "imi": "example5",
+                "level": 1
+            },
+            {
+                "write": "example6",
+                "pronounce": "example6",
+                "imi": "456",
+                "level": 2
+            },
+            {
+                "write": "example7",
+                "pronounce": "123",
+                "imi": "example7",
+                "level": 3
+            },
+            {
+                "write": "example8",
+                "pronounce": "example8",
+                "imi": "456",
+                "level": 2
+            },
+            {
+                "write": "example9",
+                "pronounce": "123",
+                "imi": "example9",
+                "level": 1
+            },
+            {
+                "write": "example10",
+                "pronounce": "example10",
+                "imi": "456"
+            },
+            {
+                "write": "example11",
+                "pronounce": "none",
+                "imi": "example11"
+            }
+        ],
+        "tag-example3": [
+            {
+                "write": "example1",
+                "pronounce": "123",
+                "imi": "example1"
+            },
+            {
+                "write": "example2",
+                "pronounce": "example2",
+                "imi": "456"
+            },
+            {
+                "write": "example3",
+                "pronounce": "123",
+                "imi": "example30"
+            },
+            {
+                "write": "example4",
+                "pronounce": "example4",
+                "imi": "456"
+            },
+            {
+                "write": "example5",
+                "pronounce": "123",
+                "imi": "example5"
+            },
+            {
+                "write": "example6",
+                "pronounce": "example6",
+                "imi": "456"
+            },
+            {
+                "write": "example7",
+                "pronounce": "123",
+                "imi": "example7"
+            },
+            {
+                "write": "example8",
+                "pronounce": "example8",
+                "imi": "456"
+            },
+            {
+                "write": "example9",
+                "pronounce": "123",
+                "imi": "example9"
+            },
+            {
+                "write": "example10",
+                "pronounce": "example10",
+                "imi": "456"
+            }
+        ]
+    }
+}

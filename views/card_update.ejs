@@ -1,0 +1,15 @@
+<% include ./layout/a %>
+
+<div class="container">
+	<div class="container">
+		<form action="/tango/<%= tag %>/<%= tango.write %>/update" method="POST">
+	        <input type="text" name="write" value="<%= tango.write %>">
+	        <input type="text" name="pronounce" value="<%= tango.pronounce %>">
+	        <input type="text" name="imi" value="<%= tango.imi %>">
+	        <button>！！！？</button>
+	    </form>
+	    <a href="/tango">back</a>
+	</div>
+</div>
+
+<% include ./layout/b %>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>record</title>
+	<link rel="stylesheet" type="text/css" href="/general.css">
+	<link rel="stylesheet" type="text/css" href="/card.css">
+</head>
+<body>
+	<input type="text" name="search">
+	<div class="top">
+		<div>example</div>
+	</div>
+	<div class="container-container">
+		<div class="container">
+			<% for ( const [tag, tangos] of Object.entries(words.word) ){ %>
+			<div class="page">
+		    	<div class="cover">
+		    		<div class="cover-core"><%= tag %></div>
+		    	</div>
+
+		    	<div class="content">
+
+		    		<div class="tag tag-<%= tag %>" data-tag="<%= tag %>"><%= tag %>
+			    		<% tangos.forEach((tango) => { %>
+			    		<% if(tango.level){ %>
+			    		<div class="word word-level-<%= tango.level %>">
+			    		<% } else { %>
+			    		<div class="word">
+			    		<% } %>
+			    		    <span class="word-a"><%= tango.write %></span>
+			    		    <% if(tango.pronounce){ %>
+			    		    <span class="word-b"><%= tango.pronounce %></span>
+			    		    <% } else { %>
+			    		    <span class="word-b"></span>
+			    		    <% } %>
+			    		    <span class="word-c"><%= tango.imi %></span>
+			    		    <span class="to-right">
+								<div class="option">🔵</div>
+			                </span>
+			            </div>
+			    	    <% }) %>
+			    	</div>
+
+			    	<div class="arata">
+			            <div>
+		                    <div><%= tag %>　－＞</div>
+		                    <input type="text" name="write">
+		                    <input type="text" name="pronounce">
+		                    <input type="text" name="imi">
+			                <button data-tag="<%= tag %>">test</button>
+			            </div>
+			        </div>
+	            <!-- content end -->
+		    	</div>
+	        <!-- page end -->
+		    </div>
+			<% } %>
+		</div>
+	</div>
+	
+
+	<div class="operator">
+			<div class="op-levelup">↑↑↑</div>
+			<div class="op-leveldown">↓↓↓</div>
+			<a class="op-delete" href="/tango///delete">消除</a>
+			<a class="op-update" href="/tango///update">更新</a>
+	</div>
+
+	<template class="wordT">
+		<div class="word">
+			<span class="word-a"></span>
+			<span class="word-b"></span>
+			<span class="word-c"></span>
+			<span class="to-right">
+				<div class="option">🔵</div>
+			</span>
+		</div>
+	</template>
+
+	<!-- page open -->
+	<script type="text/javascript">
+
+		let currentPage;
+		function tagOpen(e){
+			// console.log(this, e);
+			if(currentPage && currentPage !== this){
+				currentPage.classList.remove("page-open1");
+				currentPage.classList.remove("page-open2");
+				currentPage.classList.remove("page-open3");
+			}
+			this.classList.remove("page-close");
+			this.classList.add("page-open1");
+			currentPage = this;
+
+			// z-index for box-shadow
+			let z = 100;
+			currentPage.style.zIndex = z;
+			z--;
+			let leaf = currentPage;
+			while( (leaf = leaf.previousSibling) !== null){
+				if(leaf.classList){
+					leaf.classList.remove("page-open");
+					leaf.classList.add("page-close");
+					leaf.style.zIndex = z;
+					z--;
+				}
+			}
+			leaf = currentPage;
+			while( (leaf = leaf.nextSibling) !== null){
+				if(leaf.classList){
+					leaf.classList.remove("page-open");
+					leaf.classList.add("page-close");
+					leaf.style.zIndex = z;
+					z--;
+				}
+			}
+		}
+
+		document.querySelectorAll(".page").forEach((page) => {
+			page.addEventListener("click", function(e){
+				tagOpen.call(this, e);
+			});
+
+			page.addEventListener("transitionend", async function(e){
+				// console.log(e); 
+				function* classListGenerator(){
+					page.classList.add("page-open2");
+					yield "pageOpen2";
+					page.classList.add("page-open3");
+					yield "pageOpen3";
+					return "end";
+				}
+				if(this === currentPage){
+					if(e.propertyName.includes("flex")){
+						let ty = classListGenerator();
+						ty.next();
+						setTimeout(() => ty.next(), 10);
+						// callback not work, only setTimeout
+					}
+				}
+			});
+
+		});
+	</script>
+
+	<!-- operation -->
+	<script type="text/javascript">
+		(function(){})();
+
+
+		let operator = document.querySelector(".operator");
+		const tags = document.querySelectorAll(".tag");
+		let word;
+
+		// 註冊操作選單事件
+		tags.forEach((tag) => {
+			// arrow function will not work with "this"
+			tag.addEventListener("click", function(e){
+				if(e.target.classList.contains("option")){
+					operator.style.top = `${e.pageY + 1}px`;
+					operator.style.left = `${e.pageX + 1}px`;
+					word = e.target.parentNode.parentNode;
+					const tango = word.querySelector(".word-a").innerText;
+					operator.querySelector(".op-delete").href = `/tango/${this.dataset.tag}/${tango}/delete`;
+					operator.querySelector(".op-update").href = `/tango/${this.dataset.tag}/${tango}/update`;
+					operator.dataset.tag = this.dataset.tag;
+					operator.dataset.tango = tango;
+					operator.classList.add("operator-active");
+					e.stopPropagation();
+				}
+			});
+		});
+
+		// 註冊操作事件
+		operator.addEventListener("click", function(e){
+
+			// 上下
+			if(e.target.classList.contains("op-levelup") || e.target.classList.contains("op-leveldown")){
+				// 移除class (暫時)
+				if( word ){
+		            word.classList.remove("word-level-1");
+		            word.classList.remove("word-level-2");
+		            word.classList.remove("word-level-3");
+				}
+
+				// request body
+		        let req = new URLSearchParams();
+				if(e.target.classList.contains("op-levelup")){
+					req.append("level", "rise");
+				}
+				else if(e.target.classList.contains("op-leveldown")){
+					req.append("level", "fall");
+				}
+
+				// request
+				if( this.dataset.tag && this.dataset.tango && word ){
+					fetch(`/tango/${this.dataset.tag}/${this.dataset.tango}/update`, {
+		                method: "POST",
+		                body: req
+		            })
+		            .then(() => {
+		                fetch("/word_new.json")
+		                .then((res) => {
+		                    return res.json();
+		                })
+		                .then((data) => {
+		                    word.classList.add(`word-level-${data.level}`);
+		                });
+		            });
+				}
+			}
+			// 消除
+			else if(e.target.classList.contains("op-delete")){
+				e.preventDefault();
+				fetch(e.target.href)
+				.then((res) => {
+					return res.json();
+				})
+				.then((data) => {
+					if(data["delete"] && word ){
+						word.remove();
+					}
+					console.log("消除", data.delete);
+				});
+			}
+	        
+            
+		});
+
+		document.querySelector("body").addEventListener("click", (e) => {
+			if(operator.classList.contains("operator-active")){
+				operator.classList.remove("operator-active");
+			}
+		});
+	</script>
+
+	<!-- new tango request -->
+	<script type="text/javascript">
+		const arata = document.querySelectorAll(".arata");
+		const templateWord = document.querySelector(".wordT");
+		function newWordDOM(data, tag){
+			// duplicate node
+			let tmp = document.importNode(templateWord.content, true);
+			tmp.querySelector(".word-a").textContent = data.write;
+			tmp.querySelector(".word-b").textContent = data.pronounce;
+			tmp.querySelector(".word-c").textContent = data.imi;
+			document.querySelector(`.tag-${tag}`).appendChild(tmp);
+		}
+		arata.forEach((arata) => {
+			const trigger = arata.querySelector("[data-tag]");
+			const inputWrite = arata.querySelector("[name=write]");
+			const inputPronounce = arata.querySelector("[name=pronounce]");
+			const inputImi = arata.querySelector("[name=imi]");
+			trigger.addEventListener("click", (e) => {
+				// request body
+				let tango = new URLSearchParams();
+				tango.append("write", inputWrite.value);
+				tango.append("pronounce", inputPronounce.value);
+				tango.append("imi", inputImi.value);
+				fetch(`/tango/${trigger.dataset.tag}/new`, {
+					method: "POST",
+					body: tango
+				})
+				.then((res) => {
+					inputWrite.value = "";
+					inputPronounce.value = "";
+					inputImi.value = "";
+					return res.json();
+				})
+				.then((data) => {
+					newWordDOM(data, trigger.dataset.tag);
+				});
+			});
+		});
+	</script>
+
+	<!-- search -->
+	<script type="text/javascript">
+
+		const katakana_t = ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", "ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", "パ", "ピ", "プ", "ペ", "ポ", "ャ", "ュ", "ョ", "ッ", "ァ", "ィ", "ゥ", "ェ", "ォ", "ヴ"];
+		const hiragana_t = ["あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", "ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", "ぱ", "ぴ", "ぷ", "ぺ", "ぽ", "ゃ", "ゅ", "ょ", "っ", "ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゔ"];
+		let kl = katakana_t.length;
+		function hiragana(katakana){
+			if(katakana){
+				return [].map.call(katakana, (k) => {
+					for(let i = 0; i < kl; i++){
+						if(k === katakana_t[i]){
+							return hiragana_t[i];
+						}
+					}
+					return k;
+				}).join("");
+			}
+		}
+
+		function Search(){
+			this.words = document.querySelectorAll(".word");
+			this.wordsText_transformed = [].map.call(this.words, (word) => hiragana(word.textContent) );
+			this.result = [];
+			this.current;
+			this.previous;
+			this.input = document.querySelector("[name=search]");
+			this.n = 0;
+
+			this.close = function(){
+				this.input.classList.remove("search-show");
+				this.current = null;
+				this.previous = null;
+				this.n = 0;
+				this.words = document.querySelectorAll(".word");
+				// update word data when every time close (to include new word)
+				this.wordsText_transformed = [].map.call(this.words, (word) => hiragana(word.textContent) );
+			};
+			close = close.bind(this);
+			this.open = function(){
+				this.input.classList.add("search-show");
+			};
+			open = open.bind(this);
+		}
+		let search = new Search();
+
+		search.input.addEventListener("keyup", function(e){
+			
+			if(this.value === ""){
+				return;
+			}
+			if(e.code === "Enter"){
+				if(search.result.length === 0){
+					search.input.value += ":)";
+					return;
+				}
+				if(search.previous){
+				    search.words[search.previous].querySelector(".option").textContent = "🔵";
+				}
+				search.current = search.result[search.n];
+				console.dir(search.current);
+
+				tagOpen.call(search.words[search.current].parentNode.parentNode.parentNode, e);
+				// window.scroll(0, search.words[search.current].offsetTop);
+				let range = document.createRange();
+				range.selectNode(search.words[search.current]);
+				window.getSelection().removeAllRanges();
+				window.getSelection().addRange(range);
+				search.words[search.current].querySelector(".option").textContent = "🔴";
+				search.n = ++search.n % search.result.length;
+				search.previous = search.current;
+				return;
+			}
+			search.result = [];
+			search.wordsText_transformed.forEach((write, n) => {
+				if( write.includes(hiragana(this.value)) ){
+					search.result.push(n);
+				}
+			});
+			console.log(this.value, search.result);
+
+
+		});
+
+		document.addEventListener("keydown", function(e){
+			// issue: in every input element should block triggering
+			if( e.target !== search.input ){
+				if(e.key === "f"){
+					search.open();
+					// 避免輸入f
+					e.preventDefault();
+					search.input.select();
+				}
+			} else {
+				if(e.key === "Escape"){
+					search.close();
+				}
+			}
+		});
+		document.addEventListener("click", function(e){
+			if(e.target !== search.input){
+				search.close();
+			}
+		});
+		
+		
+	</script>
+
+
+	<script type="text/javascript" src="/blockEnter.js"></script>
+</body>
+</html>

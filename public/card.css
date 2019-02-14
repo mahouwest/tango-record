@@ -1,0 +1,177 @@
+
+
+body {
+	margin: 0;
+    font-size: 1em;
+}
+
+input[name=search] {
+	position: fixed;
+	top: 50vh;
+	left: 50vh;
+	display: none;
+}
+input[name=search].search-show {
+	display: block;
+	z-index: 200;
+}
+
+.container-container {
+	width: 100%;
+	background: rgba(133, 167, 136, 1);
+}
+.container {
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	min-height: 100vh;
+}
+.page {
+	flex: 1;
+	transition: flex 0.4s cubic-bezier(0.39, 1.1, 0.58, 1);
+	background: rgba(214, 208, 185, 0.65);
+}
+.page-open1 {
+	flex: 20;
+	background: rgba(214, 208, 185, 1);
+	box-shadow: 1px 0 4px 0px hsla(0, 0%, 0%, 0.6), -1px 0 4px 0px hsla(0, 0%, 0%, 0.6);
+}
+
+.content {
+	opacity: 0;
+}
+.page > .content {
+	/*position: absolute;*/
+	display: none;
+}
+.page-open2 > .content {
+	display: block;
+}
+.page-open3 > .content {
+	transition-property: opacity;
+	transition-duration: 0.3s;
+    opacity: 1;	
+}
+.page-close:hover {
+	opacity: 0.2;
+}
+
+
+.tag {
+}
+.cover {
+	height: 100%;
+	display:flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.cover-core {
+	position: sticky;
+	bottom: 15vh;
+	z-index: 100;
+	transition: opacity 0.3s cubic-bezier(0.39, 1.1, 0.58, 1);
+}
+.page-open1 > .cover {
+	/*opacity: 0;*/
+	display: none;
+}
+.content {
+	padding: 1em 1em;
+}
+
+.word {
+	display: flex;
+}
+.word-level-1 {
+	background: hsla(0, 0%, 0%, 0.1);
+}
+.word-level-2 {
+	background: hsla(0, 0%, 0%, 0.2);
+}
+.word-level-3 {
+	background: hsla(0, 0%, 0%, 0.3);
+}
+.word:hover {
+	background: rgba(100, 100, 100, 0.1);
+}
+
+.word-a, .word-b, .word-c {
+	margin: 0 0 0 0;
+	/* 改用padding 選取(反白)文字比較方便 */
+	padding: 0 1em;
+}
+.word-a, .word-b {
+	min-width: 6em;
+}
+.word .to-right {
+	/* 自動填滿margin */
+	margin-left: auto;
+	/* 消除inline-block縫隙 */
+	/*font-size: 0;*/
+}
+.word .to-right a{
+	min-width: 3rem;
+	font-size: 1rem;
+}
+.word .to-right .option {
+	cursor: pointer;
+}
+
+.op-levelup, .op-leveldown {
+	margin: 0 0;
+	cursor: pointer;
+}
+.op-levelup:hover, .op-leveldown:hover {
+	background: hsla(0, 0%, 0%, 0.1);
+}
+
+.arata {
+	display: flex;
+	justify-content: flex-end;
+}
+.arata > div {
+	display: flex;
+	align-items: center;
+}
+.arata input[name="write"] {
+	width: 8em;
+	min-width: 8em;
+	margin: 0 0.5em;
+}
+.arata input[name="pronounce"] {
+	width: 8em;
+	min-width: 8em;
+	margin: 0 0.5em;
+}
+.arata input[name="imi"] {
+	width: 16em;
+	min-width: 16em;
+	margin: 0 0.5em;
+}
+.arata form {
+	float: right;
+}
+.arata:after {
+	clear: both;
+	content: "";
+	height: 0;
+	display: block;
+}
+
+
+.operator {
+	background: rgba(255, 255, 255, 0.6);
+	padding: 0.3em 0.6em;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 1000;
+}
+.operator-active {
+	display: flex;
+}
+
+div {
+	/*border: 1px solid #ff0000;*/
+}

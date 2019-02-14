@@ -1,0 +1,33 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+body {
+	font-family: 'Noto Sans TC', sans-serif;
+	font-weight: 300;
+	margin: 0;
+	word-break: break-all;
+}
+
+
+a {
+	text-decoration: none;
+	color: #79b5e2;
+}
+a:hover {
+	color: #3e84b9;
+}
+
+button {
+	padding: 5px 10px;
+	background: #ffffff;
+	border: 0 solid #999999;
+	box-shadow: 0 0 2px 0px #222;
+	cursor: pointer;
+	min-height: 2rem;
+	min-width: 4rem;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
