@@ -20,7 +20,7 @@
             {
                 "write": "example4",
                 "pronounce": "example4",
-                "imi": "456"
+                "imi": "4567"
             },
             {
                 "write": "example5",
@@ -101,7 +101,8 @@
             {
                 "write": "example9",
                 "pronounce": "123",
-                "imi": "example9"
+                "imi": "example9",
+                "level": 1
             },
             {
                 "write": "example10",

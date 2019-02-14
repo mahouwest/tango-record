@@ -1,12 +1,12 @@
 
 
 body {
-	margin: 0; /* 預設會有8px的margin */
+    margin: 0; /* 預設會有8px的margin */
     font-size: 1em;
 }
 
 .container {
-	width: 70%;
-	margin: 25px auto;
+    width: 70%;
+    margin: 25px auto;
 }
 
